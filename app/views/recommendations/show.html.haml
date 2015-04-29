@@ -1,0 +1,18 @@
+
+%h1 recommendation posted
+
+%p
+        %strong author:
+        = Person.find(@recommendation.author_id).diaspora_handle
+%p
+        %strong Recipient:
+        = Person.find(@recommendation.recipient_id).diaspora_handle
+%p
+        = @recommendation.candidates.map do |candidate|
+                .field
+                        %strong friend:
+                        = candidate.diaspora_handle
+                        %strong score:
+                        = candidate.score
+
+= link_to 'back', recommendations_path

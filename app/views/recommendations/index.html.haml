@@ -1,0 +1,33 @@
+
+%h1 all recommendations
+
+%table
+        %tr
+                %th recommendation,
+                %th author, 
+                %th recipient,
+                %th actions
+
+        - @recommendations.each do |recommendation|
+                %tr
+                        %td= recommendation.id
+                        %td= Person.find(recommendation.author_id).diaspora_handle
+                        %td= Person.find(recommendation.recipient_id).diaspora_handle
+                        %td= link_to 'show', recommendation_path(recommendation) 
+                        %td= link_to "destroy", recommendation_path(recommendation), method: :delete, data: {confirm: 'are you sure?'}
+
+%br
+
+%h1 candidate ranks
+
+%p
+        - @candidates.each do |handle, score|
+                .field
+                        %strong candidate:
+                        = handle
+                        %strong total score:
+                        = score
+
+%br
+
+= link_to 'new', new_recommendation_path

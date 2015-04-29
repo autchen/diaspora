@@ -1,0 +1,32 @@
+
+%h1 new recommendation
+
+
+= form_for @recommendation, url: recommendations_path do |f|
+        - if @recommendation.errors.any?
+                #error_explanation
+                        %h2= "#{pluralize(@recommendation.errors.count, "error")}"
+                        %ul
+                                - @recommendation.errors.full_messages.each do |msg|
+                                        %li= msg
+
+
+        .field
+                = f.label :author_id
+                = f.select :author_id, [[current_user.person.diaspora_handle, current_user.person.id]]
+        .field
+                = f.label :recipient_id
+                = f.select :recipient_id, contact_persons
+
+        - @recommendation.candidates.map do |candidate|
+                .field
+                        %strong friend:
+                        = candidate.diaspora_handle
+                        %strong score:
+                        = candidate.score
+
+        .actions
+                = f.submit 'send'
+
+
+= link_to 'back', recommendations_path

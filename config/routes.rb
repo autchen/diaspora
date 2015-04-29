@@ -7,6 +7,8 @@ require 'sidetiq/web'
 
 Diaspora::Application.routes.draw do
 
+  resources :recommendations
+
   resources :report, :except => [:edit, :new]
 
   if Rails.env.production?
